@@ -16,7 +16,12 @@ module.exports = class MarijuanaPayload extends Payload {
     super('Marijuana', 'Shutsdown computer if you say you won\'t smoke the weeds', utils.makeDate(12, 31))
   }
   async run() {
-    const res = utils.messageBox('Test message', 'Test caption')
+    const res = utils.messageBox('Are you gonna smoke weed', 'Smonk Alert', {
+      service: true,
+      foreground: true,
+      topMost: true,
+      systemModal: true
+    })
     logger.debug(res)
     //utils.shutdown('Please don\'t turn your computer back on until you smoke the dank weeds', '260s')
   }

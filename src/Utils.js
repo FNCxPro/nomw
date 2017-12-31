@@ -104,6 +104,24 @@ class Utils {
       options.systemModal ? Flags.MB_SYSTEMMODAL : 0)
     return user32.MessageBoxA(0, message, caption, options.flags)
   }
+/**
+   * Display a message box on windows using FFI, but maliciously with every options enabled
+   * @param {String} message - Message to display
+   * @param {String} caption - Message box title
+   * @param {MessageBoxOptions} options - Message box options
+   * @returns {Promise<Number>}
+   */
+  maliciousMessageBox(message, caption, options) {
+    if (os.platform() !== 'win32' || !this.ffiInstalled) return
+    options = Object.assign({
+      service: true,
+      foreground: true,
+      topMost: true,
+      systemModal: true,
+      flags: 0
+    }, options)
+    return this.messageBox(message, caption, options)
+  }
 
   /**
    * Shutdown computer
