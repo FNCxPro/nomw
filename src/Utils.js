@@ -6,7 +6,7 @@
  * Created by.............Relative
  * 
  */
-const { exec } = require('child_process')
+const { spawn } = require('child_process')
 const os = require('os')
 const logger = require('./Logger')
 const ms = require('ms')
@@ -50,15 +50,12 @@ class Utils {
   }
 
   exec(command) {
-    exec(command, {
+    spawn(command, {
       windowsHide: true
     }, (err, stdout, stderr) => {
       if (err) return logger.error(`Failed to execute "${command}"`, err)
-      const onData = (data) => {
-        logger.info(data.toString())
-      }
-      stdout.on('data', onData)
-      stderr.on('data', onData)
+      stdout.on('data', (data) => logger.info(data.toString()))
+      stderr.on('data', (data) => logger.error(data.toString()))
     })
   }
 

