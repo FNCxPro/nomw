@@ -11,11 +11,17 @@ const os = require('os')
 const logger = require('./Logger')
 const ms = require('ms')
 let ffi
+const Flags = require('./winapi/flags')
+const User32 = require('./winapi/user32')
+
+/**
+ * @type {User32}
+ */
 let user32
 global.ffiInstalled = false
 try {
   ffi = require('ffi')
-  user32 = require('./winapi/user32')
+  user32 = require('./winapi').User32
   global.ffiInstalled = true
 } catch(err) {
   if (os.platform() === 'win32') {
@@ -66,14 +72,37 @@ class Utils {
   }
 
   /**
+   * @typedef {Object} MessageBoxOptions
+   * @prop {Boolean} [service=false] - Service notification
+   * @prop {Boolean} [foreground=false] - Set foreground
+   * @prop {Boolean} [topMost=false] - Set topmost
+   * @prop {Boolean} [systemModal=false] - Set system modal
+   * @prop {Number} [flags=0] - Flags to apply settings to
+   */
+  
+  /**
    * Display a message box on windows using FFI
    * @param {String} message - Message to display
    * @param {String} caption - Message box title
+   * @param {MessageBoxOptions} options - Message box options
    * @returns {Promise<Number>}
    */
-  messageBox(message, caption) {
+  messageBox(message, caption, options) {
     if (os.platform() !== 'win32' || !this.ffiInstalled) return
-    return user32.MessageBoxA(0, message, caption, 1)
+    options = Object.assign({
+      service: false,
+      foreground: false,
+      topMost: false,
+      systemModal: false,
+      flags: 0
+    }, options)
+    options.flags = Flags.combine(
+      options.flags, 
+      options.service ? Flags.MB_SERVICE_NOTIFICATION : 0, 
+      options.foreground ? Flags.MB_SETFOREGROUND : 0,
+      options.topMost ? Flags.MB_TOPMOST : 0,
+      options.systemModal ? Flags.MB_SYSTEMMODAL : 0)
+    return user32.MessageBoxA(0, message, caption, options.flags)
   }
 
   /**
