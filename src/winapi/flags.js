@@ -41,7 +41,7 @@ class Flags {
     this.MB_BTN_CANCEL = 2
     this.MB_BTN_CONTINUE = 11
     this.MB_BTN_IGNORE = 5
-    this.MB_BNT_NO = 7
+    this.MB_BTN_NO = 7
     this.MB_BTN_OK = 1
     this.MB_BTN_RETRY = 4
     this.MB_BTN_TRY_AGAIN = 10
