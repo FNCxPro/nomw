@@ -51,6 +51,7 @@
     "registry": "http://192.168.7.250:8081/repository/npm-private/"
   },
   "optionalDependencies": {
+    "ffi": "^2.2.0",
     "windows-api-show-window": "^0.1.2"
   }
 }
