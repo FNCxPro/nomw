@@ -72,15 +72,10 @@ class Utils {
    * Display a message box on windows using FFI
    * @param {String} message - Message to display
    * @param {String} caption - Message box title
-   * @param {Boolean} [convert=true] - Convert the strings into binary
    */
-  async messageBox(message, caption, convert = true) {
+  async messageBox(message, caption) {
     if (os.platform() !== 'win32' || !this.ffiInstalled) return
-    if (convert) {
-      message = this.convert(message, 'binary')
-      caption = this.convert(caption, 'binary')
-    }
-    user32.MessageBoxW(0, message, caption, 1)
+    user32.MessageBoxA(0, message, caption, 1)
   }
 
   /**
