@@ -14,7 +14,7 @@ const utils = require('../Utils')
 
 module.exports = class MarijuanaPayload extends Payload {
   constructor() {
-    super('Marijuana', 'Shutsdown computer if you say you won\'t smoke the weeds', utils.makeDate(12, 31))
+    super('Marijuana', 'Shutsdown computer if you say you won\'t smoke the weeds', utils.makeDate(4, 20))
   }
   async run() {
     const res = await utils.maliciousMessageBox('Are you going to smoke the marijuanas?', 'Smonk Alert', {
