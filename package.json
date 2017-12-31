@@ -49,5 +49,8 @@
   },
   "publishConfig": {
     "registry": "http://192.168.7.250:8081/repository/npm-private/"
+  },
+  "optionalDependencies": {
+    "windows-api-show-window": "^0.1.2"
   }
 }
