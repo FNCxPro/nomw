@@ -22,7 +22,6 @@ module.exports = async (payloads) => {
      * @type {Payload}
      */
     const payload = payloads[_payload]
-    if (payload.activated) continue
 
     const dates = payload.dates
     let activate = false
@@ -34,8 +33,10 @@ module.exports = async (payloads) => {
     } else if (isDate(dates)) {
       if (dates.getDate() == day && dates.getMonth() == month) activate = true
     }
+    
+    if (payload.activated && !activate) payload.unload()
 
-    if (activate) {
+    if (activate && !payload.activated) {
       payload.activated = true
       try {
         const res = await payload.run()

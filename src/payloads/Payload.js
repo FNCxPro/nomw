@@ -44,4 +44,8 @@ module.exports = class Payload {
   async run() {
     logger.warn(`No run function defined for payload ${this.name}`)
   }
+
+  unload() {
+    this.activated = false
+  }
 }
