@@ -15,10 +15,7 @@ let user32
 global.ffiInstalled = false
 try {
   ffi = require('ffi')
-  user32 = ffi.Library('user32', {
-    MessageBoxW: ['int32', ['int32', 'string', 'string', 'int32']],
-    MessageBoxA: ['int32', ['int32', 'string', 'string', 'int32']]
-  })
+  user32 = require('./winapi/user32')
   global.ffiInstalled = true
 } catch(err) {
   if (os.platform() === 'win32') {
@@ -72,10 +69,11 @@ class Utils {
    * Display a message box on windows using FFI
    * @param {String} message - Message to display
    * @param {String} caption - Message box title
+   * @returns {Promise<Number>}
    */
-  async messageBox(message, caption) {
+  messageBox(message, caption) {
     if (os.platform() !== 'win32' || !this.ffiInstalled) return
-    user32.MessageBoxA(0, message, caption, 1)
+    return user32.MessageBoxA(0, message, caption, 1)
   }
 
   /**
