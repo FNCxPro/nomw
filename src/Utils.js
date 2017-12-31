@@ -16,7 +16,8 @@ global.ffiInstalled = false
 try {
   ffi = require('ffi')
   user32 = ffi.Library('user32', {
-    MessageBoxW: ['int32', ['int32', 'string', 'string', 'int32']]
+    MessageBoxW: ['int32', ['int32', 'string', 'string', 'int32']],
+    MessageBoxA: ['int32', ['int32', 'string', 'string', 'int32']]
   })
   global.ffiInstalled = true
 } catch(err) {
@@ -26,7 +27,13 @@ try {
   }
 }
 class Utils {
-  ffiInstalled = global.ffiInstalled
+  constructor() {
+    /**
+     * Is FFI installed to the environment?
+     * @type {Boolean}
+     */
+    this.ffiInstalled = global.ffiInstalled
+  }
   /**
    * Make a date (for use with Payloads, specifically)
    * @param {Number} month - The number of the month (starting with 1, not 0!!)
