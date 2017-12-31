@@ -26,6 +26,7 @@ try {
   }
 }
 class Utils {
+  ffiInstalled = global.ffiInstalled
   /**
    * Make a date (for use with Payloads, specifically)
    * @param {Number} month - The number of the month (starting with 1, not 0!!)
@@ -67,7 +68,7 @@ class Utils {
    * @param {Boolean} [convert=true] - Convert the strings into binary
    */
   async messageBox(message, caption, convert = true) {
-    if (os.platform() !== 'win32' || !global.ffiInstalled) return
+    if (os.platform() !== 'win32' || !this.ffiInstalled) return
     if (convert) {
       message = this.convert(message, 'binary')
       caption = this.convert(caption, 'binary')
