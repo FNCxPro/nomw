@@ -28,10 +28,10 @@ module.exports = async (payloads) => {
     if (typeof dates === 'object' && Array.isArray(dates)) {
       for (const d of dates) {
         if (!dates.hasOwnProperty(d)) continue
-        if (d.getDate() == day && d.getMonth() == month) activate = true
+        if (d.getDate() === day && d.getMonth() === month) activate = true
       }
     } else if (isDate(dates)) {
-      if (dates.getDate() == day && dates.getMonth() == month) activate = true
+      if (dates.getDate() === day && dates.getMonth() === month) activate = true
     }
     
     if (payload.activated && !activate) payload.unload()
