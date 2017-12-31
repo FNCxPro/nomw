@@ -17,7 +17,7 @@ module.exports = async (payloads) => {
   logger.debug(`${month + 1}-${day}`)
   /* eslint-disable */
   for (const _payload in payloads) {
-    if (!Object.hasOwnProperty(payloads, _payload)) continue
+    if (!payloads.hasOwnProperty(_payload)) continue
     /**
      * @type {Payload}
      */
